@@ -6,7 +6,7 @@
 #    By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 10:08:11 by woumecht          #+#    #+#              #
-#    Updated: 2023/01/30 17:50:35 by woumecht         ###   ########.fr        #
+#    Updated: 2023/02/02 13:35:15 by woumecht         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJ=philo.o \
 all:$(NAME)
 
 $(NAME):$(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -fsanitize=address
 
 clean:
 	rm -f $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:00:36 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/01 15:58:21 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/02 13:45:43 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t get_current_time()
 {
-    size_t  time; 
+    int  time; 
     struct timeval tv;
     
     time = gettimeofday(&tv, NULL);
@@ -23,27 +23,31 @@ size_t get_current_time()
     return (tv.tv_usec);
 }
 
-void    thinking(t_ele *ptr, int x)
+size_t  convert_sec_to_macro
+
+void    thinking(t_ele *ptr)
 {
-    printf("%zu %d is thinking\n", get_current_time(), x);
+    printf("%zu %d is thinking\n", get_current_time(), ptr->philo->id_philo);
 }
 
-void    died(t_ele *ptr, int x)
+void    died(t_ele *ptr)
 {
-    printf("%zu %d died\n", get_current_time(), x);
+    printf("%zu %d died\n", get_current_time(), ptr->philo->id_philo);
 }
 
-void    sleeping(t_ele *ptr, int x)
+void    sleeping(t_ele *ptr)
 {
-    printf("%zu %d is sleeping\n", get_current_time(), x);
+    printf("%zu %d is sleeping\n", get_current_time(), ptr->philo->id_philo);
+    usleep(ptr->time_to_sleep);
 }
 
-void    eating(t_ele *ptr, int x)
+void    eating(t_ele *ptr)
 {
-    printf("%zu %d is eating\n", get_current_time(), x);
+    printf("%zu %d is eating\n", get_current_time(), ptr->philo->id_philo);
+    usleep(ptr->time_to_eat);
 }
 
-void    taken_fork(t_ele *ptr, int x)
+void    taken_fork(t_ele *ptr)
 {
-    printf("%zu %d  has taken a fork\n", get_current_time(), x);
+    printf("%zu %d  has taken a fork\n", get_current_time(), ptr->philo->id_philo);
 }
