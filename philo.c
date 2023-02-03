@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/03 11:47:00 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:29:40 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	fill_the_philosophers(t_ele *ptr)
 			ptr->philo[j].id_left_philo = 1;
 		else
 			ptr->philo[j].id_left_philo = i + 1;
+		ptr->philo[j].element = ptr;
 		i++;
 		j++;
 	}
@@ -77,35 +78,44 @@ void	destroy_mutex(t_ele *ptr)
 void	*routine(void *arg)
 {
 	t_philos *philo;
-	
+	int	*r;
+	int	i;
+
+	i = 0;
+	r = &i;
 	philo = (t_philos *)arg;
-	// if (ptr->philo->id_philo % 2 != 0)
-	// 	sleep(2);
+	if (philo->id_philo % 2 != 0)
+		sleep(2);
+	// printf("id : %d\n", philo->id_philo);
 	while (1)
 	{
-			sleeping(ptr);
-			pthread_mutex_lock(&ptr->mut[philo->id_right_philo]);
-			pthread_mutex_lock(&ptr->mut[philo->id_left_philo]);
-			taken_fork(ptr);
-			taken_fork(ptr);
-			eating(ptr);
-			pthread_mutex_unlock(&ptr->mut[philo->id_right_philo]);
-			pthread_mutex_unlock(&ptr->mut[philo->id_left_philo]);
-			thinking(ptr);
+			pthread_mutex_lock(&philo->element->mut[philo->id_right_philo]);
+			pthread_mutex_lock(&philo->element->mut[philo->id_left_philo]);
+			taken_fork(philo->element, philo->id_philo);
+			taken_fork(philo->element, philo->id_philo);
+			eating(philo->element, philo->id_philo);
+			pthread_mutex_unlock(&philo->element->mut[philo->id_right_philo]);
+			pthread_mutex_unlock(&philo->element->mut[philo->id_left_philo]);
+			thinking(philo->element, philo->id_philo);
+			sleeping(philo->element, philo->id_philo);
+			if (philo->time_last_meal - get_current_time() > philo->element->time_to_die)
+			{
+				died(philo->element, philo->id_philo);
+				return ((void *)r);
+			}
 	}
 	return (NULL);
 }
 
-void	creat_philo(t_ele *ptr)
+int	creat_philo(t_ele *ptr)
 {
     int j;
+	int	*r;
 	
     j = 0;
 	init_mutex(ptr);
 	while (j < ptr->nb_philo)
 	{
-        ptr->id_philo = malloc(sizeof(int));
-        *ptr->id_philo = j;
 		if (pthread_create(&ptr->th[j], NULL, &routine, &(ptr->philo[j])) != 0)
 			perror("Failed to create a thread");
         j++;
@@ -113,10 +123,16 @@ void	creat_philo(t_ele *ptr)
 	j = 0;
 	while (j < ptr->nb_philo)
 	{
-		pthread_join(ptr->th[j], NULL);
+		pthread_join(ptr->th[j], (void **)&r);
 		j++;
 	}
+	if (*r == 0)
+	{
+		destroy_mutex(ptr);
+		return (0);
+	}
 	destroy_mutex(ptr);
+	return (1);
 }
 
 int	main(int ac, char **av)
@@ -127,7 +143,11 @@ int	main(int ac, char **av)
 	{
 		ptr = malloc(sizeof(t_ele));
         init_struct(ptr, av);
-		creat_philo(ptr);
+		if (creat_philo(ptr) == 0)
+		{
+			free(ptr);
+			return (2);
+		}
 	}
 	return (0);
 }
