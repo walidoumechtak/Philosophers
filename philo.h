@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/02 16:06:19 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:48:12 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_philos
 	int				id_philo;
 	int				id_right_philo;
 	int				id_left_philo;
+	struct s_philos	*element;
+	
 }					t_philos;
 
 typedef struct s_element
