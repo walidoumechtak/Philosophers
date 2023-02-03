@@ -6,7 +6,7 @@
 #    By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 10:08:11 by woumecht          #+#    #+#              #
-#    Updated: 2023/02/02 13:35:15 by woumecht         ###   ########.fr        #
+#    Updated: 2023/02/02 16:05:50 by woumecht         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CFLAGS=-Wall -Wextra -Werror
 NAME=philo
 
 OBJ=philo.o \
+	convert_time.o \
 	helped_functions/ft_atoi.o \
 	case_of_philo/cases_of_philo.o
 #helped_functions/ft_split.o \

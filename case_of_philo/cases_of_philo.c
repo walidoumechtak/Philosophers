@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:00:36 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/02 13:45:43 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/02 16:17:31 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@ size_t get_current_time()
     return (tv.tv_usec);
 }
 
-size_t  convert_sec_to_macro
-
 void    thinking(t_ele *ptr)
 {
     printf("%zu %d is thinking\n", get_current_time(), ptr->philo->id_philo);
+    usleep(ptr->time_to_sleep_us);
 }
 
 void    died(t_ele *ptr)
@@ -38,13 +37,13 @@ void    died(t_ele *ptr)
 void    sleeping(t_ele *ptr)
 {
     printf("%zu %d is sleeping\n", get_current_time(), ptr->philo->id_philo);
-    usleep(ptr->time_to_sleep);
+    usleep(ptr->time_to_sleep_us);
 }
 
 void    eating(t_ele *ptr)
 {
     printf("%zu %d is eating\n", get_current_time(), ptr->philo->id_philo);
-    usleep(ptr->time_to_eat);
+    usleep(ptr->time_to_eat_us);
 }
 
 void    taken_fork(t_ele *ptr)
