@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/03 16:29:40 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/04 16:17:35 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	fill_the_philosophers(t_ele *ptr)
 		else
 			ptr->philo[j].id_left_philo = i + 1;
 		ptr->philo[j].element = ptr;
+		ptr->philo[j].time_last_meal = 0;
 		i++;
 		j++;
 	}
@@ -41,6 +42,7 @@ void    init_struct(t_ele *ptr, char **av)
     ptr->nb_philo = ft_atoi(av[1]);
     ptr->th = malloc(sizeof(pthread_t) * ptr->nb_philo);
     ptr->mut = malloc(sizeof(pthread_mutex_t) * ptr->nb_philo);
+    ptr->mut_stop = malloc(sizeof(pthread_mutex_t) * ptr->nb_philo);
 	ptr->philo = malloc(ptr->nb_philo * sizeof(t_philos));
 	ptr->time_to_die = ft_atoi(av[2]);
 	ptr->time_to_die_us = ms_to_micro(ptr->time_to_die);
@@ -48,6 +50,7 @@ void    init_struct(t_ele *ptr, char **av)
 	ptr->time_to_eat_us = ms_to_micro(ptr->time_to_eat);
 	ptr->time_to_sleep = ft_atoi(av[4]);
 	ptr->time_to_sleep_us = ms_to_micro(ptr->time_to_sleep);
+	ptr->stop = 1;
 	fill_the_philosophers(ptr);
 }
 
@@ -59,6 +62,7 @@ void	init_mutex(t_ele *ptr)
 	while (i < ptr->nb_philo)
 	{
 		pthread_mutex_init(&ptr->mut[i], NULL);
+		pthread_mutex_init(&ptr->mut_stop[i], NULL);
 		i++;
 	}
 }
@@ -71,6 +75,7 @@ void	destroy_mutex(t_ele *ptr)
 	while (i < ptr->nb_philo)
 	{
 		pthread_mutex_destroy(&ptr->mut[i]);
+		pthread_mutex_destroy(&ptr->mut_stop[i]);
 		i++;
 	}
 }
@@ -84,25 +89,33 @@ void	*routine(void *arg)
 	i = 0;
 	r = &i;
 	philo = (t_philos *)arg;
-	if (philo->id_philo % 2 != 0)
+	if (philo->id_philo % 2 == 0)
 		sleep(2);
 	// printf("id : %d\n", philo->id_philo);
-	while (1)
+	while (philo->element->stop == 1)
 	{
-			pthread_mutex_lock(&philo->element->mut[philo->id_right_philo]);
-			pthread_mutex_lock(&philo->element->mut[philo->id_left_philo]);
-			taken_fork(philo->element, philo->id_philo);
-			taken_fork(philo->element, philo->id_philo);
-			eating(philo->element, philo->id_philo);
-			pthread_mutex_unlock(&philo->element->mut[philo->id_right_philo]);
-			pthread_mutex_unlock(&philo->element->mut[philo->id_left_philo]);
-			thinking(philo->element, philo->id_philo);
-			sleeping(philo->element, philo->id_philo);
-			if (philo->time_last_meal - get_current_time() > philo->element->time_to_die)
+		pthread_mutex_lock(&philo->element->mut[philo->id_right_philo]);
+		pthread_mutex_lock(&philo->element->mut[philo->id_left_philo]);
+		taken_fork(philo->element, philo->id_philo);
+		taken_fork(philo->element, philo->id_philo);
+		eating(philo->element, philo->id_philo);
+		pthread_mutex_unlock(&philo->element->mut[philo->id_right_philo]);
+		pthread_mutex_unlock(&philo->element->mut[philo->id_left_philo]);
+		sleeping(philo->element, philo->id_philo);
+		thinking(philo->element, philo->id_philo);
+		printf(" ------------------->>> %zu\n",get_current_time() - philo->time_last_meal);
+		printf(" ----------tlm--------->>> %zu\n", philo->time_last_meal);
+		printf(" ----------gct--------->>> %zu\n", get_current_time());
+		printf(" ----------ttd--------->>> %zu\n", philo->element->time_to_die);
+		if (get_current_time() - philo->time_last_meal > philo->element->time_to_die)
 			{
 				died(philo->element, philo->id_philo);
-				return ((void *)r);
+				pthread_mutex_lock(&philo->element->mut_stop[philo->id_philo]);
+				philo->element->stop = 0;
+				pthread_mutex_unlock(&philo->element->mut_stop[philo->id_philo]);
+				// return ((void *)r);
 			}
+			
 	}
 	return (NULL);
 }
@@ -124,12 +137,12 @@ int	creat_philo(t_ele *ptr)
 	while (j < ptr->nb_philo)
 	{
 		pthread_join(ptr->th[j], (void **)&r);
+		// if (*r == 0)
+		// {
+		// 	destroy_mutex(ptr);
+		// 	return (0);
+		// }
 		j++;
-	}
-	if (*r == 0)
-	{
-		destroy_mutex(ptr);
-		return (0);
 	}
 	destroy_mutex(ptr);
 	return (1);
@@ -145,6 +158,7 @@ int	main(int ac, char **av)
         init_struct(ptr, av);
 		if (creat_philo(ptr) == 0)
 		{
+			printf("walid has 0 in so_long\n");
 			free(ptr);
 			return (2);
 		}

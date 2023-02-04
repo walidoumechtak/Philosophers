@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/03 16:24:14 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/04 15:54:17 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,18 @@ typedef struct s_element
 {
 	pthread_t			*th;
 	pthread_mutex_t		*mut;
+	pthread_mutex_t		*mut_stop;
 	t_philos			*philo;
 	int					nb_philo;
 	int					*id_philo;
-	size_t					time_to_eat;
-	size_t					time_to_sleep;
+	size_t				time_to_eat;
+	size_t				time_to_sleep;
 	size_t				time_to_die_us;
 	size_t				time_to_sleep_us;
-	size_t					time_to_die;
+	size_t				time_to_die;
 	size_t				time_to_eat_us;
 	int					nb_time_must_eat;
-
+	int					stop;
 }						t_ele;
 
 int						ft_atoi(const char *str);
