@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:00:36 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/04 16:11:02 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/04 18:24:22 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ size_t get_current_time()
 
 void    thinking(t_ele *ptr, int x)
 {
+    (void)ptr;
     printf("%zu %d is thinking\n", get_current_time(), x);
-    usleep(ptr->time_to_sleep_us);
 }
 
 void    died(t_ele *ptr, int x)
