@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/04 18:26:40 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/04 18:30:45 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,11 @@ void	*routine(void *arg)
 	if (philo->id_philo % 2 == 0)
 		sleep(2);
 	// printf("id : %d\n", philo->id_philo);
+	if (philo->element->nb_philo == 1)
+	{
+		died(philo->element, philo->id_philo);
+		return (NULL);
+	}
 	while (philo->element->stop == 1)
 	{
 		pthread_mutex_lock(&philo->element->mut[philo->id_right_philo]);
