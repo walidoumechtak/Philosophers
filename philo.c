@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/04 18:30:45 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/05 06:33:35 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	*routine(void *arg)
 	philo = (t_philos *)arg;
 	if (philo->id_philo % 2 == 0)
 		sleep(2);
-	// printf("id : %d\n", philo->id_philo);
 	if (philo->element->nb_philo == 1)
 	{
 		died(philo->element, philo->id_philo);
@@ -108,18 +107,18 @@ void	*routine(void *arg)
 		pthread_mutex_unlock(&philo->element->mut[philo->id_left_philo]);
 		sleeping(philo->element, philo->id_philo);
 		thinking(philo->element, philo->id_philo);
-		printf(" ------------------->>> %zu\n",get_current_time() - philo->time_last_meal);
-		// printf(" ----------tlm--------->>> %zu\n", philo->time_last_meal);
-		// printf(" ----------gct--------->>> %zu\n", get_current_time());
 		// printf(" ----------ttd--------->>> %zu\n", philo->element->time_to_die);
+		printf(" ----------tlm--------->>> %zu\n", philo->time_last_meal);
+		printf(" ----------gct--------->>> %zu\n", get_current_time());
+		printf(" ------------------->>> %zu\n",get_current_time() - philo->time_last_meal);
 		if (get_current_time() - philo->time_last_meal > philo->element->time_to_die)
-			{
-				pthread_mutex_lock(&philo->element->mut_stop[philo->id_philo]);
-				died(philo->element, philo->id_philo);
-				philo->element->stop = 0;
-				pthread_mutex_unlock(&philo->element->mut_stop[philo->id_philo]);
-				// return ((void *)r);
-			}
+		{
+			pthread_mutex_lock(&philo->element->mut_stop[philo->id_philo]);
+			died(philo->element, philo->id_philo);
+			philo->element->stop = 0;
+			pthread_mutex_unlock(&philo->element->mut_stop[philo->id_philo]);
+			// return ((void *)r);
+		}
 			
 	}
 	return (NULL);
