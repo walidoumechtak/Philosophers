@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/04 15:54:17 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/05 09:47:16 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-# define LENGHT 250
 
 typedef struct s_philos
 {
@@ -47,6 +45,7 @@ typedef struct s_element
 	size_t				time_to_eat_us;
 	int					nb_time_must_eat;
 	int					stop;
+	size_t	design_time;
 }						t_ele;
 
 int						ft_atoi(const char *str);

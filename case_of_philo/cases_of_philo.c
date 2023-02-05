@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:00:36 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/04 18:24:22 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/05 09:53:40 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ size_t get_current_time()
 void    thinking(t_ele *ptr, int x)
 {
     (void)ptr;
-    printf("%zu %d is thinking\n", get_current_time(), x);
+    printf("%zu %d is thinking\n", get_current_time() , x);
 }
 
 void    died(t_ele *ptr, int x)
