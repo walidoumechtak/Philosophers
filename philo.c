@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/05 11:16:32 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/06 12:08:01 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	fill_the_philosophers(t_ele *ptr)
 	{
 		ptr->philo[j].id_philo = i;
 		if (i == 1)
-			ptr->philo[j].id_right_philo = ptr->nb_philo;
+			ptr->philo[j].id_right_philo = ptr->nb_philo - 1;
 		else
-			ptr->philo[j].id_right_philo = i - 1;
-		if (i == 5)
-			ptr->philo[j].id_left_philo = 1;
+			ptr->philo[j].id_right_philo = j - 1;
+		if (i == ptr->nb_philo)
+			ptr->philo[j].id_left_philo = ptr->nb_philo - 1;
 		else
-			ptr->philo[j].id_left_philo = i + 1;
+			ptr->philo[j].id_left_philo = j;
 		ptr->philo[j].element = ptr;
 		ptr->philo[j].time_last_meal = 0;
 		i++;
@@ -52,6 +52,7 @@ void    init_struct(t_ele *ptr, char **av)
 	ptr->time_to_sleep_us = ms_to_micro(ptr->time_to_sleep);
 	ptr->stop = 1;
 	ptr->design_time = get_current_time();
+	ptr->is_one_philo = 0;
 	fill_the_philosophers(ptr);
 }
 
@@ -90,38 +91,32 @@ void	*routine(void *arg)
 	i = 0;
 	r = &i;
 	philo = (t_philos *)arg;
-	if (philo->id_philo % 2 != 0)
+	if (philo->id_philo % 2 == 0)
 		sleep(2);
-	if (philo->element->nb_philo == 1)
-	{
-		died(philo->element, philo->id_philo);
-		return (NULL);
-	}
 	while (philo->element->stop == 1)
 	{
-		pthread_mutex_lock(&philo->element->mut[philo->id_right_philo]);
 		pthread_mutex_lock(&philo->element->mut[philo->id_left_philo]);
+		pthread_mutex_lock(&philo->element->mut[philo->id_right_philo]);
 		taken_fork(philo->element, philo->id_philo);
 		taken_fork(philo->element, philo->id_philo);
 		eating(philo->element, philo->id_philo);
-		pthread_mutex_unlock(&philo->element->mut[philo->id_right_philo]);
 		pthread_mutex_unlock(&philo->element->mut[philo->id_left_philo]);
+		pthread_mutex_unlock(&philo->element->mut[philo->id_right_philo]);
 		sleeping(philo->element, philo->id_philo);
-		thinking(philo->element, philo->id_philo);
 		if (get_current_time() - philo->time_last_meal > philo->element->time_to_die)
 		{
 			pthread_mutex_lock(&philo->element->mut_stop[philo->id_philo]);
-			died(philo->element, philo->id_philo);
 			philo->element->stop = 0;
+			died(philo->element, philo->id_philo);
+			pthread_mutex_unlock(&philo->element->mut_stop[philo->id_philo]);
 			break;
 			// return ((void *)r);
-			pthread_mutex_unlock(&philo->element->mut_stop[philo->id_philo]);
 		}
+		thinking(philo->element, philo->id_philo);
 		// printf(" ----------ttd--------->>> %zu\n", philo->element->time_to_die);
 		// printf(" ----------tlm--------->>> %zu\n", philo->time_last_meal);
 		// printf(" ----------gct--------->>> %zu\n", get_current_time());
 		// printf(" ------------------->>> %zu\n",get_current_time() - philo->time_last_meal);
-			
 	}
 	return (NULL);
 }
@@ -143,11 +138,6 @@ int	creat_philo(t_ele *ptr)
 	while (j < ptr->nb_philo)
 	{
 		pthread_join(ptr->th[j], (void **)&r);
-		// if (*r == 0)
-		// {
-		// 	destroy_mutex(ptr);
-		// 	return (0);
-		// }
 		j++;
 	}
 	destroy_mutex(ptr);

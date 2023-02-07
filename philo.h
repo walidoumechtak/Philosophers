@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/05 09:47:16 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/06 10:01:34 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_element
 	int					nb_time_must_eat;
 	int					stop;
 	size_t	design_time;
+	int	is_one_philo;
 }						t_ele;
 
 int						ft_atoi(const char *str);
