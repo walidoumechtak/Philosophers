@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/11 18:02:56 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:18:45 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,10 @@ int	main(int ac, char **av)
 		ptr = malloc(sizeof(t_ele));
 		ptr->ac = ac;
         init_struct(ptr, av, ac);
+		if (ptr->philo->nb_time_must_eat == 0)
+		{
+			perror("Error the number of meals must be greth than 0");
+		}
 		if (creat_philo(ptr) == 0)
 		{
 			free(ptr);
