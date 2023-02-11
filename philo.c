@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/11 15:31:41 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:29:16 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,10 @@ void	detache_all(t_ele *ptr)
 void	is_dead(t_ele *ptr)
 {
 	int	i;
-
 	while (1)
 	{
 		i = 0;
-		while (i < ptr->nb_philo)
+		while (i < ptr->nb_philo )
 		{
 			if (get_current_time() - ptr->philo[i].time_last_meal > ptr->time_to_die)
 			{
@@ -130,7 +129,7 @@ void	*routine(void *arg)
 	philo = (t_philos *)arg;
 	if (philo->id_philo % 2 != 0)
 		usleep(200);
-	while (philo->element->stop == 1)
+	while (philo->element->stop == 1 && philo->nb_time_must_eat > 0)
 	{
 		pthread_mutex_lock(&philo->element->mut[philo->id_left_philo]);
 		taken_fork(philo->element, philo->id_philo);
@@ -146,13 +145,13 @@ void	*routine(void *arg)
 		pthread_mutex_unlock(&philo->element->mut[philo->id_right_philo]);
 		sleeping(philo->element, philo->id_philo);
 		thinking(philo->element, philo->id_philo);
-		// printf("philo %d -- %d ------ \n\n", philo->id_philo ,philo->nb_time_must_eat);
-		if (philo->nb_time_must_eat == 0)
-		{
-			pthread_detach(philo->element->th[philo->id_philo - 1]);
-			philo->time_last_meal = SIZE_MAX;
-			break ;
-		}
+		printf("philo %d -- %d ------ \n\n", philo->id_philo ,philo->nb_time_must_eat);
+		// if (philo->nb_time_must_eat == 0)
+		// {
+		// 	pthread_detach(philo->element->th[philo->id_philo - 1]);
+		// 	philo->time_last_meal = get_current_time();
+		// 	break;
+		// }
 	}
 	return (NULL);
 }
@@ -170,7 +169,6 @@ int	creat_philo(t_ele *ptr)
 			perror("Failed to create a thread");
         j++;
 	}
-	
 	is_dead(ptr);
 	if (ptr->stop == 0)
 			detache_all(ptr);
