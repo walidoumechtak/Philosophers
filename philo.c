@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/11 13:56:45 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/11 15:31:41 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ void	fill_the_philosophers(t_ele *ptr,char **av, int ac)
 	while (i <= ptr->nb_philo)
 	{
 		ptr->philo[j].id_philo = i;
-		// ptr->philo[j].id_right_philo = j;
-		// if (i == ptr->nb_philo)
-		// 	ptr->philo[j].id_left_philo = 0;
-		// else	
-		// 	ptr->philo[j].id_left_philo = j+1;
 		if (i == 1)
 			ptr->philo[j].id_right_philo = ptr->nb_philo - 1;
 		else
@@ -115,7 +110,6 @@ void	is_dead(t_ele *ptr)
 			{
 				ptr->stop = 0;
 				died(ptr, ptr->philo[i].id_philo);
-				// detache_all(ptr);
 				break ;
 			}
 			i++;
@@ -131,7 +125,7 @@ void	*routine(void *arg)
 	int	*r;
 	int	i;
 
-	i = 0;
+	i = 404;
 	r = &i;
 	philo = (t_philos *)arg;
 	if (philo->id_philo % 2 != 0)
@@ -150,11 +144,15 @@ void	*routine(void *arg)
 		eating(philo->element, philo->id_philo);
 		pthread_mutex_unlock(&philo->element->mut[philo->id_left_philo]);
 		pthread_mutex_unlock(&philo->element->mut[philo->id_right_philo]);
-		if (philo->nb_time_must_eat == 0)
-			pthread_detach(philo->element->th[philo->id_philo - 1]);
 		sleeping(philo->element, philo->id_philo);
 		thinking(philo->element, philo->id_philo);
-		printf("philo %d -- %d ------ \n\n", philo->id_philo ,philo->nb_time_must_eat);
+		// printf("philo %d -- %d ------ \n\n", philo->id_philo ,philo->nb_time_must_eat);
+		if (philo->nb_time_must_eat == 0)
+		{
+			pthread_detach(philo->element->th[philo->id_philo - 1]);
+			philo->time_last_meal = SIZE_MAX;
+			break ;
+		}
 	}
 	return (NULL);
 }
@@ -162,7 +160,8 @@ void	*routine(void *arg)
 int	creat_philo(t_ele *ptr)
 {
     int j;
-
+	int *ret;
+	
     j = 0;
 	init_mutex(ptr);
 	while (j < ptr->nb_philo)
@@ -171,13 +170,14 @@ int	creat_philo(t_ele *ptr)
 			perror("Failed to create a thread");
         j++;
 	}
+	
 	is_dead(ptr);
 	if (ptr->stop == 0)
 			detache_all(ptr);
 	j = 0;
 	while (j < ptr->nb_philo && ptr->stop == 1)
 	{
-		pthread_join(ptr->th[j], NULL);
+		pthread_join(ptr->th[j], (void **) &ret);
 		j++;
 	}
 	destroy_mutex(ptr);
