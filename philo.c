@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/11 16:35:52 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:02:56 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	fill_the_philosophers(t_ele *ptr,char **av, int ac)
 		ptr->philo[j].time_last_meal = get_current_time();
 		if (ac == 6)
 			ptr->philo[j].nb_time_must_eat = ft_atoi(av[5]);
+		else
+			ptr->philo[j].nb_time_must_eat = 1;
 		i++;
 		j++;
 	}
@@ -113,6 +115,8 @@ void	is_dead(t_ele *ptr)
 				temp = 1;
 				break;
 			}
+			else
+				temp = 0;
 			if (get_current_time() - ptr->philo[i].time_last_meal > ptr->time_to_die)
 			{
 				ptr->stop = 0;
@@ -135,7 +139,7 @@ void	*routine(void *arg)
 	i = 404;
 	r = &i;
 	philo = (t_philos *)arg;
-	if (philo->id_philo % 2 != 0)
+	if (philo->id_philo % 2 == 0)
 		usleep(200);
 	while (philo->element->stop == 1 && philo->nb_time_must_eat > 0)
 	{
@@ -151,6 +155,8 @@ void	*routine(void *arg)
 		eating(philo->element, philo->id_philo);
 		pthread_mutex_unlock(&philo->element->mut[philo->id_left_philo]);
 		pthread_mutex_unlock(&philo->element->mut[philo->id_right_philo]);
+		if (philo->nb_time_must_eat == 0)
+			break;
 		sleeping(philo->element, philo->id_philo);
 		thinking(philo->element, philo->id_philo);
 		printf("philo %d -- %d ------ \n\n", philo->id_philo ,philo->nb_time_must_eat);
