@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:00:36 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/05 13:27:35 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/11 13:49:45 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void    eating(t_ele *ptr, int x)
     printf("%zu     | %d is eating\n", get_current_time() - ptr->design_time, x);
     ptr->philo[x-1].time_last_meal = get_current_time();
     usleep(ptr->time_to_eat_us);
+    if (ptr->ac == 6)
+        ptr->philo[x - 1].nb_time_must_eat--;
 }
 
 void    taken_fork(t_ele *ptr, int x)

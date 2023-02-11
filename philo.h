@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/06 10:01:34 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/11 13:09:02 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ typedef struct s_philos
 	int					id_right_philo;
 	int					id_left_philo;
 	size_t				time_last_meal;
+	int					nb_time_must_eat;
 	struct s_element	*element;
 
 }						t_philos;
 
 typedef struct s_element
 {
+	int	ac;
 	pthread_t			*th;
 	pthread_mutex_t		*mut;
 	pthread_mutex_t		*mut_stop;
@@ -43,7 +45,7 @@ typedef struct s_element
 	size_t				time_to_sleep_us;
 	size_t				time_to_die;
 	size_t				time_to_eat_us;
-	int					nb_time_must_eat;
+	
 	int					stop;
 	size_t	design_time;
 	int	is_one_philo;
