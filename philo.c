@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/11 16:29:16 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:35:52 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,19 @@ void	detache_all(t_ele *ptr)
 void	is_dead(t_ele *ptr)
 {
 	int	i;
+	int temp;
+
+	temp = 0;
 	while (1)
 	{
 		i = 0;
-		while (i < ptr->nb_philo )
+		while (i < ptr->nb_philo)
 		{
+			if (ptr->philo[i].nb_time_must_eat == 0)
+			{
+				temp = 1;
+				break;
+			}
 			if (get_current_time() - ptr->philo[i].time_last_meal > ptr->time_to_die)
 			{
 				ptr->stop = 0;
@@ -113,7 +121,7 @@ void	is_dead(t_ele *ptr)
 			}
 			i++;
 		}
-		if (ptr->stop == 0)
+		if (ptr->stop == 0 || temp == 1)
 			break;
 	}
 }
