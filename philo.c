@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/12 10:32:05 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/12 11:23:41 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	init_struct(t_ele *ptr, char **av, int ac)
 	ptr->stop = 1;
 	ptr->design_time = get_current_time();
 	ptr->is_one_philo = 0;
+	ptr->is_all_philo_eat = 0;
 	fill_the_philosophers(ptr, av, ac);
 }
 
@@ -98,21 +99,42 @@ void	detache_all(t_ele *ptr)
 	}
 }
 
+// void	is_all_philo_eat(t_ele *ptr)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (1)
+// 	{
+// 		if (ptr->philo[i].nb_time_must_eat == 0)
+// 			i++;
+// 		if (i == ptr->nb_philo - 1)
+// 		{
+// 			ptr->is_all_philo_eat = 1;
+// 			break ;
+// 		}
+// 	}
+// }
+
 void	is_dead(t_ele *ptr)
 {
 	int	i;
+	int	j;
 	int	temp;
 
 	temp = 0;
+	j = 0;
 	while (1)
 	{
 		i = 0;
 		while (i < ptr->nb_philo)
 		{
-			if (ptr->philo[i].nb_time_must_eat == 0)
+			if (ptr->philo[j].nb_time_must_eat == 0)
+				j++;
+			if (j == ptr->nb_philo - 1)
 			{
-				temp = 1;
-				break ;
+				ptr->is_all_philo_eat = 1;
+				break;
 			}
 			if (get_current_time()
 				- ptr->philo[i].time_last_meal > ptr->time_to_die)
@@ -123,7 +145,7 @@ void	is_dead(t_ele *ptr)
 			}
 			i++;
 		}
-		if (ptr->stop == 0 || temp == 1)
+		if (ptr->stop == 0 || ptr->is_all_philo_eat == 1)
 			break ;
 	}
 }
@@ -170,6 +192,7 @@ int	creat_philo(t_ele *ptr)
 		j++;
 	}
 	is_dead(ptr);
+	
 	if (ptr->stop == 0)
 		detache_all(ptr);
 	j = 0;

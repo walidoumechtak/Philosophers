@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/12 10:36:03 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/12 11:05:47 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_element
 	size_t				time_to_sleep_us;
 	size_t				time_to_die;
 	size_t				time_to_eat_us;
-
+	int	is_all_philo_eat;
 	int					stop;
 	size_t				design_time;
 	int					is_one_philo;
