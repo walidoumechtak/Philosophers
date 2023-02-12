@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/12 11:23:41 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/12 11:26:40 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,6 @@ int	creat_philo(t_ele *ptr)
 		j++;
 	}
 	is_dead(ptr);
-	
 	if (ptr->stop == 0)
 		detache_all(ptr);
 	j = 0;
