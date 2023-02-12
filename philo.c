@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/12 11:26:40 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/12 13:43:29 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,23 +99,6 @@ void	detache_all(t_ele *ptr)
 	}
 }
 
-// void	is_all_philo_eat(t_ele *ptr)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (1)
-// 	{
-// 		if (ptr->philo[i].nb_time_must_eat == 0)
-// 			i++;
-// 		if (i == ptr->nb_philo - 1)
-// 		{
-// 			ptr->is_all_philo_eat = 1;
-// 			break ;
-// 		}
-// 	}
-// }
-
 void	is_dead(t_ele *ptr)
 {
 	int	i;
@@ -129,19 +112,19 @@ void	is_dead(t_ele *ptr)
 		i = 0;
 		while (i < ptr->nb_philo)
 		{
-			if (ptr->philo[j].nb_time_must_eat == 0)
-				j++;
-			if (j == ptr->nb_philo - 1)
-			{
-				ptr->is_all_philo_eat = 1;
-				break;
-			}
 			if (get_current_time()
 				- ptr->philo[i].time_last_meal > ptr->time_to_die)
 			{
 				ptr->stop = 0;
 				died(ptr, ptr->philo[i].id_philo);
 				break ;
+			}
+			if (ptr->philo[j].nb_time_must_eat == 0)
+				j++;
+			if (j == ptr->nb_philo - 1)
+			{
+				ptr->is_all_philo_eat = 1;
+				break;
 			}
 			i++;
 		}
@@ -156,7 +139,7 @@ void	*routine(void *arg)
 
 	philo = (t_philos *)arg;
 	if (philo->id_philo % 2 == 0)
-		usleep(200);
+		usleep(100);
 	while (philo->element->stop == 1 && philo->nb_time_must_eat > 0)
 	{
 		pthread_mutex_lock(&philo->element->mut[philo->id_left_philo]);
@@ -210,6 +193,8 @@ int	main(int ac, char **av)
 
 	if (ac == 5 || ac == 6)
 	{
+		if (errors(av) == 0)
+			return (1);
 		ptr = malloc(sizeof(t_ele));
 		ptr->ac = ac;
 		init_struct(ptr, av, ac);
@@ -223,5 +208,7 @@ int	main(int ac, char **av)
 			return (2);
 		}
 	}
+	else
+		printf("Number of arguments are incorrect !\n");
 	return (0);
 }
