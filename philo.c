@@ -6,20 +6,19 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/11 18:18:45 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/12 10:32:05 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	fill_the_philosophers(t_ele *ptr,char **av, int ac)
+void	fill_the_philosophers(t_ele *ptr, char **av, int ac)
 {
 	int	i;
 	int	j;
 
 	i = 1;
 	j = 0;
-
 	while (i <= ptr->nb_philo)
 	{
 		ptr->philo[j].id_philo = i;
@@ -42,12 +41,12 @@ void	fill_the_philosophers(t_ele *ptr,char **av, int ac)
 	}
 }
 
-void    init_struct(t_ele *ptr, char **av, int ac)
+void	init_struct(t_ele *ptr, char **av, int ac)
 {
-    ptr->nb_philo = ft_atoi(av[1]);
-    ptr->th = malloc(sizeof(pthread_t) * ptr->nb_philo);
-    ptr->mut = malloc(sizeof(pthread_mutex_t) * ptr->nb_philo);
-    ptr->mut_stop = malloc(sizeof(pthread_mutex_t) * ptr->nb_philo);
+	ptr->nb_philo = ft_atoi(av[1]);
+	ptr->th = malloc(sizeof(pthread_t) * ptr->nb_philo);
+	ptr->mut = malloc(sizeof(pthread_mutex_t) * ptr->nb_philo);
+	ptr->mut_stop = malloc(sizeof(pthread_mutex_t) * ptr->nb_philo);
 	ptr->philo = malloc(ptr->nb_philo * sizeof(t_philos));
 	ptr->time_to_die = ft_atoi(av[2]);
 	ptr->time_to_die_us = ms_to_micro(ptr->time_to_die);
@@ -95,14 +94,14 @@ void	detache_all(t_ele *ptr)
 	while (i < ptr->nb_philo)
 	{
 		pthread_detach(ptr->th[i]);
-		i++;	
+		i++;
 	}
 }
 
 void	is_dead(t_ele *ptr)
 {
 	int	i;
-	int temp;
+	int	temp;
 
 	temp = 0;
 	while (1)
@@ -113,11 +112,10 @@ void	is_dead(t_ele *ptr)
 			if (ptr->philo[i].nb_time_must_eat == 0)
 			{
 				temp = 1;
-				break;
+				break ;
 			}
-			else
-				temp = 0;
-			if (get_current_time() - ptr->philo[i].time_last_meal > ptr->time_to_die)
+			if (get_current_time()
+				- ptr->philo[i].time_last_meal > ptr->time_to_die)
 			{
 				ptr->stop = 0;
 				died(ptr, ptr->philo[i].id_philo);
@@ -126,18 +124,14 @@ void	is_dead(t_ele *ptr)
 			i++;
 		}
 		if (ptr->stop == 0 || temp == 1)
-			break;
+			break ;
 	}
 }
 
 void	*routine(void *arg)
 {
-	t_philos *philo;
-	int	*r;
-	int	i;
+	t_philos	*philo;
 
-	i = 404;
-	r = &i;
 	philo = (t_philos *)arg;
 	if (philo->id_philo % 2 == 0)
 		usleep(200);
@@ -156,40 +150,32 @@ void	*routine(void *arg)
 		pthread_mutex_unlock(&philo->element->mut[philo->id_left_philo]);
 		pthread_mutex_unlock(&philo->element->mut[philo->id_right_philo]);
 		if (philo->nb_time_must_eat == 0)
-			break;
+			break ;
 		sleeping(philo->element, philo->id_philo);
 		thinking(philo->element, philo->id_philo);
-		printf("philo %d -- %d ------ \n\n", philo->id_philo ,philo->nb_time_must_eat);
-		// if (philo->nb_time_must_eat == 0)
-		// {
-		// 	pthread_detach(philo->element->th[philo->id_philo - 1]);
-		// 	philo->time_last_meal = get_current_time();
-		// 	break;
-		// }
 	}
 	return (NULL);
 }
 
 int	creat_philo(t_ele *ptr)
 {
-    int j;
-	int *ret;
-	
-    j = 0;
+	int	j;
+
+	j = 0;
 	init_mutex(ptr);
 	while (j < ptr->nb_philo)
 	{
 		if (pthread_create(&ptr->th[j], NULL, &routine, &(ptr->philo[j])) != 0)
 			perror("Failed to create a thread");
-        j++;
+		j++;
 	}
 	is_dead(ptr);
 	if (ptr->stop == 0)
-			detache_all(ptr);
+		detache_all(ptr);
 	j = 0;
 	while (j < ptr->nb_philo && ptr->stop == 1)
 	{
-		pthread_join(ptr->th[j], (void **) &ret);
+		pthread_join(ptr->th[j], NULL);
 		j++;
 	}
 	destroy_mutex(ptr);
@@ -198,16 +184,16 @@ int	creat_philo(t_ele *ptr)
 
 int	main(int ac, char **av)
 {
-	t_ele *ptr;
+	t_ele	*ptr;
 
 	if (ac == 5 || ac == 6)
 	{
 		ptr = malloc(sizeof(t_ele));
 		ptr->ac = ac;
-        init_struct(ptr, av, ac);
+		init_struct(ptr, av, ac);
 		if (ptr->philo->nb_time_must_eat == 0)
 		{
-			perror("Error the number of meals must be greth than 0");
+			perror("Error the number of meals must be greather than 0");
 		}
 		if (creat_philo(ptr) == 0)
 		{

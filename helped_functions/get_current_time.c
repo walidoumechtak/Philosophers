@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_time.c                                     :+:      :+:    :+:   */
+/*   get_current_time.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/02 13:48:23 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/12 10:33:21 by woumecht         ###   ########.fr       */
+/*   Created: 2023/02/12 10:35:23 by woumecht          #+#    #+#             */
+/*   Updated: 2023/02/12 10:36:39 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
-size_t	ms_to_micro(int ms)
+size_t	get_current_time(void)
 {
-	return (ms * 1000);
-}
+	int				time;
+	struct timeval	tv;
+	size_t			fulltime;
 
-int	micro_to_ms(size_t micro)
-{
-	return (micro / 1000);
+	time = gettimeofday(&tv, NULL);
+	if (time == -1)
+		return (0);
+	fulltime = tv.tv_sec * 1000 + (tv.tv_usec / 1000);
+	return (fulltime);
 }
