@@ -6,7 +6,7 @@
 #    By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 11:00:35 by woumecht          #+#    #+#              #
-#    Updated: 2023/02/13 11:58:56 by woumecht         ###   ########.fr        #
+#    Updated: 2023/02/13 12:30:55 by woumecht         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@echo $(RED) "\tall are cleaned" $(NONE)
+
+re: fclean all
 
 git:
 	git add * && git commit -m "go" && git push
