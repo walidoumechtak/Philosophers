@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/12 15:24:23 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/14 11:22:26 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	init_struct(t_ele *ptr, char **av, int ac)
 	ptr->nb_philo = ft_atoi(av[1]);
 	ptr->th = malloc(sizeof(pthread_t) * ptr->nb_philo);
 	ptr->mut = malloc(sizeof(pthread_mutex_t) * ptr->nb_philo);
-	ptr->mut_stop = malloc(sizeof(pthread_mutex_t) * ptr->nb_philo);
 	ptr->philo = malloc(ptr->nb_philo * sizeof(t_philos));
 	ptr->time_to_die = ft_atoi(av[2]);
 	ptr->time_to_die_us = ms_to_micro(ptr->time_to_die);
@@ -66,10 +65,10 @@ void	init_mutex(t_ele *ptr)
 	int	i;
 
 	i = 0;
+	pthread_mutex_init(&ptr->mut_print, NULL);
 	while (i < ptr->nb_philo)
 	{
 		pthread_mutex_init(&ptr->mut[i], NULL);
-		pthread_mutex_init(&ptr->mut_stop[i], NULL);
 		i++;
 	}
 }
@@ -79,10 +78,10 @@ void	destroy_mutex(t_ele *ptr)
 	int	i;
 
 	i = 0;
+	pthread_mutex_destroy(&ptr->mut_print);
 	while (i < ptr->nb_philo)
 	{
 		pthread_mutex_destroy(&ptr->mut[i]);
-		pthread_mutex_destroy(&ptr->mut_stop[i]);
 		i++;
 	}
 }

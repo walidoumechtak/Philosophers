@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philos.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/12 13:33:56 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/14 11:20:03 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_element
 	int					ac;
 	pthread_t			*th;
 	pthread_mutex_t		*mut;
-	pthread_mutex_t		*mut_stop;
+	pthread_mutex_t		mut_print;
 	t_philos			*philo;
 	int					nb_philo;
 	int					*id_philo;
