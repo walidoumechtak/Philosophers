@@ -6,56 +6,44 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 15:25:39 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/13 15:16:34 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/14 10:02:31 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int cpt = 0;
-
-void    *routine(void *arg)
-{
-    sem_t *s;
-
-    s = (sem_t *) arg;
-    if (sem_wait(s) == -1)
-    {
-        perror("sem_wait");
-    }
-    // printf("\n\n HEHE");
-    cpt++;
-    if(sem_post(s) == -1)
-        perror("sem_post");
-    return (NULL);
-}
 
 int main(void)
 {
-    int i;
+   pid_t pid;
+    sem_t *sem1;
+    sem1 = sem_open("sem11", O_CREAT | O_EXCL, S_IRUSR | S_IWUSR, 0);
+    sem_t *sem2;
+    sem2 = sem_open("sem22", O_CREAT | O_EXCL, S_IRUSR | S_IWUSR, 0);
+   pid = fork();
 
-    i = 0;
-    sem_t *ptr = sem_open("test", O_CREAT, 0777, 100);
-  
-    pthread_t th[100000];
+   if (pid == 0)
+   {
+        printf("1\n");
+        sem_post(sem1);
+        sem_wait(sem2);
+        printf("3\n");
+        sem_post(sem1);
 
-    while (i < 100000)
-    {
-        pthread_create(&th[i], NULL, &routine, ptr);
-        i++;
-        printf("-- %d --\n", i);
-    }
-     
-    i=0;
-    while (i < 100000)
-    {
-        pthread_join(th[i], NULL);
-        i++;
-    }
-    
-    sem_close(ptr);
-    sem_unlink("test");
+        sem_close(sem1);
+        sem_close(sem2);
+   }
+   else
+   {
+        sem_wait(sem1);
+        printf("2\n");
+        sem_post(sem2);
+        sem_wait(sem1);
+        printf("4\n");
 
-    printf("cpt : %d\n", cpt);
-    return 0;
+        wait(NULL);
+
+        sem_close(sem1);
+        sem_close(sem2);
+   }
 }
