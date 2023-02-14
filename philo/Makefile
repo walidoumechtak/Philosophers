@@ -6,7 +6,7 @@
 #    By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 10:08:11 by woumecht          #+#    #+#              #
-#    Updated: 2023/02/12 15:22:41 by woumecht         ###   ########.fr        #
+#    Updated: 2023/02/14 11:28:32 by woumecht         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,9 @@ NAME=philo
 OBJ=main.o \
 	Error_check.o \
 	convert_time.o \
-	helped_functions/ft_atoi.o \
-	helped_functions/get_current_time.o \
-	case_of_philo/cases_of_philo.o
+	ft_atoi.o \
+	get_current_time.o \
+	cases_of_philo.o
 
 all:$(NAME)
 

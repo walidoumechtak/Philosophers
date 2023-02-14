@@ -6,11 +6,11 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 21:42:52 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/12 15:23:49 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/14 11:29:27 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philos.h"
+#include "philos.h"
 #include <limits.h>
 
 static unsigned long	result_f(char *str, int i, int signe)

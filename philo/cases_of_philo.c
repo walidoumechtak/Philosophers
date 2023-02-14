@@ -6,11 +6,11 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:00:36 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/14 11:25:15 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/14 11:29:23 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philos.h"
+#include "philos.h"
 
 void	thinking(t_ele *ptr, int x)
 {

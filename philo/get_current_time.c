@@ -6,11 +6,11 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 10:35:23 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/12 15:24:07 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/14 11:29:30 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philos.h"
+#include "philos.h"
 
 size_t	get_current_time(void)
 {
