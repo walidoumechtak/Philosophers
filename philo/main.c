@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/14 11:22:26 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:29:33 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	fill_the_philosophers(t_ele *ptr, char **av, int ac)
 		if (ac == 6)
 			ptr->philo[j].nb_time_must_eat = ft_atoi(av[5]);
 		else
-			ptr->philo[j].nb_time_must_eat = 1;
+			ptr->philo[j].nb_time_must_eat = 100;
 		i++;
 		j++;
 	}
@@ -118,12 +118,12 @@ void	is_dead(t_ele *ptr)
 				died(ptr, ptr->philo[i].id_philo);
 				break ;
 			}
-			if (ptr->philo[j].nb_time_must_eat == 0)
+			if (ptr->philo[j].nb_time_must_eat == 0 && ptr-> ac == 6)
 				j++;
-			if (j == ptr->nb_philo - 1)
+			if (j == ptr->nb_philo - 1 && ptr-> ac == 6)
 			{
 				ptr->is_all_philo_eat = 1;
-				break;
+				break ;
 			}
 			i++;
 		}
@@ -135,10 +135,11 @@ void	is_dead(t_ele *ptr)
 void	*routine(void *arg)
 {
 	t_philos	*philo;
-
+	
+	
 	philo = (t_philos *)arg;
 	if (philo->id_philo % 2 == 0)
-		usleep(100);
+		usleep(200);
 	while (philo->element->stop == 1 && philo->nb_time_must_eat > 0)
 	{
 		pthread_mutex_lock(&philo->element->mut[philo->id_left_philo]);
@@ -150,6 +151,7 @@ void	*routine(void *arg)
 		}
 		pthread_mutex_lock(&philo->element->mut[philo->id_right_philo]);
 		taken_fork(philo->element, philo->id_philo);
+		printf("---------------->>>  %zu \n", philo->time_last_meal - philo->element->design_time);
 		eating(philo->element, philo->id_philo);
 		pthread_mutex_unlock(&philo->element->mut[philo->id_left_philo]);
 		pthread_mutex_unlock(&philo->element->mut[philo->id_right_philo]);
@@ -174,8 +176,6 @@ int	creat_philo(t_ele *ptr)
 		j++;
 	}
 	is_dead(ptr);
-	if (ptr->stop == 0)
-		detache_all(ptr);
 	j = 0;
 	while (j < ptr->nb_philo && ptr->stop == 1)
 	{
@@ -198,14 +198,16 @@ int	main(int ac, char **av)
 		ptr->ac = ac;
 		init_struct(ptr, av, ac);
 		if (ptr->philo->nb_time_must_eat == 0)
-		{
 			perror("Error the number of meals must be greather than 0");
-		}
 		if (creat_philo(ptr) == 0)
 		{
 			free(ptr);
-			return (2);
+			return (free(ptr), free(ptr->th), free(ptr->mut), free(ptr->philo),
+				2);
 		}
+		
+		if (ptr->stop == 0)
+			detache_all(ptr);
 	}
 	else
 		printf("Number of arguments are incorrect !\n");

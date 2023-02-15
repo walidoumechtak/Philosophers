@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/14 11:20:03 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:43:59 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef struct s_philos
 	size_t				time_last_meal;
 	int					nb_time_must_eat;
 	struct s_element	*element;
-
+	int	cpt;
+	
 }						t_philos;
 
 typedef struct s_element
