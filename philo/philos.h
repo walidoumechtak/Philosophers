@@ -6,12 +6,12 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/15 11:43:59 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:40:05 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILOS_H
+# define PHILOS_H
 
 # include <pthread.h>
 # include <stdio.h>
@@ -27,8 +27,7 @@ typedef struct s_philos
 	size_t				time_last_meal;
 	int					nb_time_must_eat;
 	struct s_element	*element;
-	int	cpt;
-	
+	int					cpt;
 }						t_philos;
 
 typedef struct s_element
@@ -53,8 +52,6 @@ typedef struct s_element
 }						t_ele;
 
 int						ft_atoi(const char *str);
-char					**ft_split(char const *s, char c);
-
 void					thinking(t_ele *ptr, int x);
 void					died(t_ele *ptr, int x);
 void					sleeping(t_ele *ptr, int x);
@@ -64,5 +61,10 @@ size_t					get_current_time(void);
 size_t					ms_to_micro(int ms);
 int						micro_to_ms(size_t micro);
 int						errors(char **av);
+void					init_struct(t_ele *ptr, char **av, int ac);
+void					init_mutex(t_ele *ptr);
+void					fill_the_philosophers(t_ele *ptr, char **av, int ac);
+void					destroy_mutex(t_ele *ptr);
+void					detache_all(t_ele *ptr);
 
 #endif

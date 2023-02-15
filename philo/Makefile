@@ -6,7 +6,7 @@
 #    By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 10:08:11 by woumecht          #+#    #+#              #
-#    Updated: 2023/02/14 11:28:32 by woumecht         ###   ########.fr        #
+#    Updated: 2023/02/15 15:39:02 by woumecht         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ OBJ=main.o \
 	convert_time.o \
 	ft_atoi.o \
 	get_current_time.o \
-	cases_of_philo.o
+	cases_of_philo.o \
+	init.o \
+	destroy.o \
 
 all:$(NAME)
 
