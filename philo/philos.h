@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/15 15:40:05 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:57:56 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void					init_mutex(t_ele *ptr);
 void					fill_the_philosophers(t_ele *ptr, char **av, int ac);
 void					destroy_mutex(t_ele *ptr);
 void					detache_all(t_ele *ptr);
+void    ft_usleep(size_t time);
 
 #endif

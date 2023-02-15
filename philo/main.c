@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/15 15:37:56 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:38:22 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,28 @@ void	is_dead(t_ele *ptr)
 
 	temp = 0;
 	j = 0;
+	i = 0;
 	while (1)
 	{
-		i = 0;
-		while (i < ptr->nb_philo)
+		if (get_current_time() - ptr->philo[i].time_last_meal > ptr->time_to_die)
 		{
-			if (get_current_time()
-				- ptr->philo[i].time_last_meal > ptr->time_to_die)
-			{
-				ptr->stop = 0;
-				died(ptr, ptr->philo[i].id_philo);
-				break ;
-			}
-			if (ptr->philo[j].nb_time_must_eat == 0 && ptr->ac == 6)
-				j++;
-			if (j == ptr->nb_philo - 1 && ptr->ac == 6)
-			{
-				ptr->is_all_philo_eat = 1;
-				break ;
-			}
-			i++;
-		}
-		if (ptr->stop == 0 || ptr->is_all_philo_eat == 1)
+			printf("====== %d ========>>>>  %zu\n", ptr->philo[i].id_philo, get_current_time() - ptr->philo[i].time_last_meal);
+			printf("==== current time ==>>>>  %zu\n", get_current_time() - ptr->design_time);
+			printf("==== last meal ==>>>>  %zu\n", ptr->philo[i].time_last_meal - ptr->design_time);
+			ptr->stop = 0;
+			died(ptr, ptr->philo[i].id_philo);
 			break ;
+		}
+		if (ptr->philo[j].nb_time_must_eat == 0 && ptr->ac == 6)
+			j++;
+		if (j == ptr->nb_philo - 1 && ptr->ac == 6)
+		{
+			ptr->is_all_philo_eat = 1;
+			break ;
+		}
+		i++;
+		if (i >= ptr->nb_philo)
+			i = 0;
 	}
 }
 
@@ -88,6 +87,8 @@ int	creat_philo(t_ele *ptr)
 		j++;
 	}
 	is_dead(ptr);
+	if (ptr->stop == 0)
+		detache_all(ptr);
 	j = 0;
 	while (j < ptr->nb_philo && ptr->stop == 1)
 	{
@@ -117,8 +118,7 @@ int	main(int ac, char **av)
 			return (free(ptr), free(ptr->th), free(ptr->mut), free(ptr->philo),
 				2);
 		}
-		if (ptr->stop == 0)
-			detache_all(ptr);
+		
 	}
 	else
 		printf("Number of arguments are incorrect !\n");

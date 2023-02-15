@@ -6,7 +6,7 @@
 #    By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 10:08:11 by woumecht          #+#    #+#              #
-#    Updated: 2023/02/15 15:39:02 by woumecht         ###   ########.fr        #
+#    Updated: 2023/02/15 16:56:28 by woumecht         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ OBJ=main.o \
 	cases_of_philo.o \
 	init.o \
 	destroy.o \
+	ft_sleep.o \
 
 all:$(NAME)
 
