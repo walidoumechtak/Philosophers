@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/15 16:57:56 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/16 09:08:02 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_philos
 	int					id_philo;
 	int					id_right_philo;
 	int					id_left_philo;
-	size_t				time_last_meal;
+	long				time_last_meal;
 	int					nb_time_must_eat;
 	struct s_element	*element;
 	int					cpt;
@@ -39,15 +39,15 @@ typedef struct s_element
 	t_philos			*philo;
 	int					nb_philo;
 	int					*id_philo;
-	size_t				time_to_eat;
-	size_t				time_to_sleep;
-	size_t				time_to_die_us;
-	size_t				time_to_sleep_us;
-	size_t				time_to_die;
-	size_t				time_to_eat_us;
+	long				time_to_eat;
+	long				time_to_sleep;
+	long				time_to_die_us;
+	long				time_to_sleep_us;
+	long				time_to_die;
+	long				time_to_eat_us;
 	int					is_all_philo_eat;
 	int					stop;
-	size_t				design_time;
+	long				design_time;
 	int					is_one_philo;
 }						t_ele;
 
@@ -57,15 +57,15 @@ void					died(t_ele *ptr, int x);
 void					sleeping(t_ele *ptr, int x);
 void					eating(t_ele *ptr, int x);
 void					taken_fork(t_ele *ptr, int x);
-size_t					get_current_time(void);
-size_t					ms_to_micro(int ms);
-int						micro_to_ms(size_t micro);
+long					get_current_time(void);
+long					ms_to_micro(int ms);
+long						micro_to_ms(size_t micro);
 int						errors(char **av);
 void					init_struct(t_ele *ptr, char **av, int ac);
 void					init_mutex(t_ele *ptr);
 void					fill_the_philosophers(t_ele *ptr, char **av, int ac);
 void					destroy_mutex(t_ele *ptr);
 void					detache_all(t_ele *ptr);
-void    ft_usleep(size_t time);
+// void    ft_usleep(size_t time);
 
 #endif

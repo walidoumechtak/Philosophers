@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/15 16:38:22 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/16 09:05:18 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,16 @@ void	is_dead(t_ele *ptr)
 {
 	int	i;
 	int	j;
-	int	temp;
-
-	temp = 0;
+	
 	j = 0;
 	i = 0;
 	while (1)
-	{
+	{	
+		
 		if (get_current_time() - ptr->philo[i].time_last_meal > ptr->time_to_die)
 		{
+			printf("\n==== current time ==>>>>  %zu\n", get_current_time() - ptr->design_time);
 			printf("====== %d ========>>>>  %zu\n", ptr->philo[i].id_philo, get_current_time() - ptr->philo[i].time_last_meal);
-			printf("==== current time ==>>>>  %zu\n", get_current_time() - ptr->design_time);
 			printf("==== last meal ==>>>>  %zu\n", ptr->philo[i].time_last_meal - ptr->design_time);
 			ptr->stop = 0;
 			died(ptr, ptr->philo[i].id_philo);
