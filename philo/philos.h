@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/16 09:08:02 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/16 09:19:37 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,12 @@ void					eating(t_ele *ptr, int x);
 void					taken_fork(t_ele *ptr, int x);
 long					get_current_time(void);
 long					ms_to_micro(int ms);
-long						micro_to_ms(size_t micro);
+long					micro_to_ms(size_t micro);
 int						errors(char **av);
 void					init_struct(t_ele *ptr, char **av, int ac);
 void					init_mutex(t_ele *ptr);
 void					fill_the_philosophers(t_ele *ptr, char **av, int ac);
 void					destroy_mutex(t_ele *ptr);
 void					detache_all(t_ele *ptr);
-// void    ft_usleep(size_t time);
 
 #endif
