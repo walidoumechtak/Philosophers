@@ -6,44 +6,68 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 15:25:39 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/14 10:02:31 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:32:26 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+//  
 
-int main(void)
+void init_struct(t_ele *ptr, char **av, int ac)
 {
-   pid_t pid;
-    sem_t *sem1;
-    sem1 = sem_open("sem11", O_CREAT | O_EXCL, S_IRUSR | S_IWUSR, 0);
-    sem_t *sem2;
-    sem2 = sem_open("sem22", O_CREAT | O_EXCL, S_IRUSR | S_IWUSR, 0);
-   pid = fork();
+     ptr->ac = ac;
+     ptr->th = malloc(sizeof(pthread_t) * ptr->nb_philo);
+	ptr->philo = malloc(ptr->nb_philo * sizeof(t_philos));
+     ptr->pids = malloc(ptr->nb_philo * sizeof(int));
+	ptr->time_to_die = ft_atoi(av[2]);
+	ptr->time_to_die_us = ms_to_micro(ptr->time_to_die);
+	ptr->time_to_eat = ft_atoi(av[3]);
+	ptr->time_to_eat_us = ms_to_micro(ptr->time_to_eat);
+	ptr->time_to_sleep = ft_atoi(av[4]);
+	ptr->time_to_sleep_us = ms_to_micro(ptr->time_to_sleep);
+	ptr->stop = 1;
+	ptr->design_time = get_current_time();
+	ptr->is_all_philo_eat = 0;
+}
 
-   if (pid == 0)
-   {
-        printf("1\n");
-        sem_post(sem1);
-        sem_wait(sem2);
-        printf("3\n");
-        sem_post(sem1);
+void routine()
+{
+     
+}
 
-        sem_close(sem1);
-        sem_close(sem2);
-   }
-   else
-   {
-        sem_wait(sem1);
-        printf("2\n");
-        sem_post(sem2);
-        sem_wait(sem1);
-        printf("4\n");
+void philosophers(t_ele *ptr)
+{
+     int  i;
+     
+     i = 0;
+     ptr->pids[0] = fork();
+     while (i < ptr->nb_philo)
+     {
+          if (ptr->pids[i] == 0)
+          {
+               routine(ptr);
+          }
+          else
+               ptr->pids[++i] = fork();
+     }
+     
+}
 
-        wait(NULL);
+int main(int ac, char **av)
+{
+     t_ele     *ptr;
+     sem_t     *sem_fork;
+     sem_t     *sem_string;
 
-        sem_close(sem1);
-        sem_close(sem2);
-   }
+     ptr = malloc(sizeof(struct s_element));
+     if (ac == 5 || ac == 6)
+     {
+          if(errors(av) == 0)
+               return (2);
+          init_struct(ptr, av, ac);
+          sem_fork = sem_open("sem11", O_CREAT | O_EXCL, S_IRUSR | S_IWUSR, ptr->nb_philo);
+          sem_string = sem_open("sem11", O_CREAT | O_EXCL, S_IRUSR | S_IWUSR, 1);
+          philosophers();
+     } 
 }
