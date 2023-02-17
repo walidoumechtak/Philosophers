@@ -6,11 +6,11 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 13:05:02 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/12 15:24:20 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/16 10:24:54 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philos.h"
+#include "philo_bonus.h"
 
 /*
 

@@ -6,38 +6,50 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/16 09:19:23 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/16 20:38:01 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
-void	is_dead(t_ele *ptr)
+int	is_dead(t_ele *ptr, int i)
+{
+	if (get_current_time() - ptr->philo[i].time_last_meal > ptr->time_to_die)
+	{
+		return (1);
+	}
+	return (0);
+}
+
+void	dead(t_ele *ptr)
 {
 	int	i;
 	int	j;
 
 	j = 0;
-	i = 0;
 	while (1)
 	{
-		if (get_current_time()
-			- ptr->philo[i].time_last_meal > ptr->time_to_die)
+		i = 0;
+		while (i < ptr->nb_philo)
 		{
-			ptr->stop = 0;
-			died(ptr, ptr->philo[i].id_philo);
-			break ;
+			if (is_dead(ptr, i) == 1)
+			{
+				died(ptr, i + 1);
+				ptr->stop = 0;
+				detache_all(ptr);
+				break ;
+			}
+			if (ptr->philo[j].nb_time_must_eat == 0 && ptr->ac == 6)
+				j++;
+			if (j == ptr->nb_philo - 1 && ptr->ac == 6)
+			{
+				ptr->is_all_philo_eat = 1;
+				break ;
+			}
+			i++;
 		}
-		if (ptr->philo[j].nb_time_must_eat == 0 && ptr->ac == 6)
-			j++;
-		if (j == ptr->nb_philo - 1 && ptr->ac == 6)
-		{
-			ptr->is_all_philo_eat = 1;
+		if (ptr->stop == 0)
 			break ;
-		}
-		i++;
-		if (i >= ptr->nb_philo)
-			i = 0;
 	}
 }
 
@@ -48,7 +60,7 @@ void	*routine(void *arg)
 	philo = (t_philos *)arg;
 	if (philo->id_philo % 2 == 0)
 		usleep(200);
-	while (philo->element->stop == 1 && philo->nb_time_must_eat > 0)
+	while (philo->element->stop)
 	{
 		pthread_mutex_lock(&philo->element->mut[philo->id_left_philo]);
 		taken_fork(philo->element, philo->id_philo);
@@ -82,9 +94,7 @@ int	creat_philo(t_ele *ptr)
 			perror("Failed to create a thread");
 		j++;
 	}
-	is_dead(ptr);
-	if (ptr->stop == 0)
-		detache_all(ptr);
+	dead(ptr);
 	j = 0;
 	while (j < ptr->nb_philo && ptr->stop == 1)
 	{

@@ -6,12 +6,12 @@
 #    By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 10:08:11 by woumecht          #+#    #+#              #
-#    Updated: 2023/02/16 09:08:41 by woumecht         ###   ########.fr        #
+#    Updated: 2023/02/16 20:32:38 by woumecht         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=cc
-CFLAGS=-Wall -Wextra -Werror
+CFLAGS=-Wall -Wextra -Werror -pthread -flto
 NAME=philo
 
 OBJ=main.o \

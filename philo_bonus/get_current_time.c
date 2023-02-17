@@ -6,13 +6,13 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 10:35:23 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/14 11:29:30 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/16 10:25:18 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philos.h"
+#include "philo_bonus.h"
 
-size_t	get_current_time(void)
+long	get_current_time(void)
 {
 	int				time;
 	struct timeval	tv;

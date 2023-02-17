@@ -6,18 +6,18 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 13:48:23 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/12 15:24:17 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/16 10:25:11 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philos.h"
+#include "philo_bonus.h"
 
-size_t	ms_to_micro(int ms)
+long	ms_to_micro(int ms)
 {
 	return (ms * 1000);
 }
 
-int	micro_to_ms(size_t micro)
+long	micro_to_ms(size_t micro)
 {
 	return (micro / 1000);
 }

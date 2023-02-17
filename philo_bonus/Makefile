@@ -6,12 +6,12 @@
 #    By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 11:00:35 by woumecht          #+#    #+#              #
-#    Updated: 2023/02/13 12:30:55 by woumecht         ###   ########.fr        #
+#    Updated: 2023/02/16 18:48:41 by woumecht         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=cc
-CFLAGS= -Wall -Wextra -Werror
+CFLAGS= -Wall -Wextra -Werror 
 NAME=philo_bonus
 
 #ANSI escape code
@@ -23,13 +23,20 @@ GRAY	=	'\033[2;37m'
 ITALIC	=	'\033[3m'
 
 
-SRC = main_bonus.c
+SRC =	main_bonus.c \
+		Error_check.c \
+		convert_time.c \
+		ft_atoi.c \
+		get_current_time.c \
+		cases_of_philo.c \
+		# destroy.c \
+# init.c \
 
 
 OBJ = $(SRC:.c=.o)
 
-.c.o	:
-			@$(CC) $(CFLAGS) -c $(SRC) -o $(OBJ)
+# .c.o	:
+# 			@$(CC) $(CFLAGS) -c $(SRC) -o $(OBJ)
 
 all: $(NAME)
 

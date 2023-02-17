@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/16 09:19:37 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/16 20:06:46 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_element
 	pthread_t			*th;
 	pthread_mutex_t		*mut;
 	pthread_mutex_t		mut_print;
+	pthread_mutex_t		mut_stop;
+	pthread_mutex_t		mut_stop2;
 	t_philos			*philo;
 	int					nb_philo;
 	int					*id_philo;

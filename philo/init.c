@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:27:39 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/15 15:39:22 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/16 20:06:58 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	init_mutex(t_ele *ptr)
 
 	i = 0;
 	pthread_mutex_init(&ptr->mut_print, NULL);
+	pthread_mutex_init(&ptr->mut_stop, NULL);
+	pthread_mutex_init(&ptr->mut_stop2, NULL);
 	while (i < ptr->nb_philo)
 	{
 		pthread_mutex_init(&ptr->mut[i], NULL);
