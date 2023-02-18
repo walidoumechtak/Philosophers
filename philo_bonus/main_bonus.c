@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 15:25:39 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/17 07:56:42 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/17 08:54:36 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void init_struct(t_ele *ptr, char **av, int ac)
 
 void routine(t_ele *ptr)
 {
-     if (ptr->id_philo % 2 == 0)
-          usleep(100);
+     // if (ptr->id_philo % 2 == 0)
+     //      usleep(400);
      while (ptr->stop == 1)
      {
           sem_wait(ptr->sem_fork);
-          taken_fork(ptr, ptr->id_philo);
           sem_wait(ptr->sem_fork);
+          taken_fork(ptr, ptr->id_philo);
           taken_fork(ptr, ptr->id_philo);
           eating(ptr, ptr->id_philo);
           sem_post(ptr->sem_fork);
@@ -63,9 +63,10 @@ void philosophers(t_ele *ptr)
                ptr->id_philo = i+1;
                routine(ptr);
           }
-          ptr->pids[++i] = fork();
-     }
-     
+          else
+               ptr->pids[++i] = fork();
+     } 
+     while (wait(NULL) != -1);
 }
 
 int main(int ac, char **av)

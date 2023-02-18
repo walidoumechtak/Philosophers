@@ -6,12 +6,12 @@
 #    By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 10:08:11 by woumecht          #+#    #+#              #
-#    Updated: 2023/02/16 20:32:38 by woumecht         ###   ########.fr        #
+#    Updated: 2023/02/18 15:33:17 by woumecht         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=cc
-CFLAGS=-Wall -Wextra -Werror -pthread -flto
+CFLAGS=-Wall -Wextra -Werror
 NAME=philo
 
 OBJ=main.o \
@@ -22,7 +22,8 @@ OBJ=main.o \
 	cases_of_philo.o \
 	init.o \
 	destroy.o \
-#	ft_sleep.o \
+	putstr_error.o \
+	ft_sleep.o \
 
 all:$(NAME)
 

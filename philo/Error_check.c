@@ -6,11 +6,12 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 13:05:02 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/15 15:40:18 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/18 08:48:06 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
+
 /*
 
     100 ==> oen of the arguments isn't a valid number
@@ -46,10 +47,10 @@ int	check_argument_format(char **av)
 int	errors(char **av)
 {
 	if (check_argument_format(av) == 100)
-		return (printf("One of the arguments isn't a valid number.\n"), 0);
+		return (ft_putstr("One of the arguments isn't a valid number.\n"), 0);
 	else if (check_argument_format(av) == 110)
-		return (printf("Need at least one philosopher to start.\n"), 0);
+		return (ft_putstr("Need at least one philosopher to start.\n"), 0);
 	else if (check_argument_format(av) == 120)
-		return (printf("The time must be greather than 60ms.\n"), 0);
+		return (ft_putstr("The time must be greather than 60ms.\n"), 0);
 	return (1);
 }
