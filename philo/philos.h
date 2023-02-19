@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/18 15:00:51 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/19 15:15:13 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ typedef struct s_element
 	t_philos			*philo;
 	int					nb_philo;
 	int					*id_philo;
-	long				time_to_eat;
-	long				time_to_sleep;
-	long				time_to_die_us;
-	long				time_to_sleep_us;
-	long				time_to_die;
-	long				time_to_eat_us;
+	unsigned long				time_to_eat;
+	unsigned long				time_to_sleep;
+	unsigned long				time_to_die_us;
+	unsigned long				time_to_sleep_us;
+	unsigned long				time_to_die;
+	unsigned long				time_to_eat_us;
 	int					is_all_philo_eat;
 	int					stop;
-	long				design_time;
+	unsigned long				design_time;
 	int					is_one_philo;
 }						t_ele;
 
@@ -59,9 +59,9 @@ void					died(t_ele *ptr, int x);
 void					sleeping(t_ele *ptr, int x);
 void					eating(t_ele *ptr, int x);
 void					taken_fork(t_ele *ptr, int x);
-long					get_current_time(void);
-long					ms_to_micro(int ms);
-long					micro_to_ms(size_t micro);
+unsigned long					get_current_time(void);
+unsigned long					ms_to_micro(int ms);
+unsigned long					micro_to_ms(unsigned long micro);
 int						errors(char **av);
 void					init_struct(t_ele *ptr, char **av, int ac);
 void					init_mutex(t_ele *ptr);
@@ -69,6 +69,6 @@ void					fill_the_philosophers(t_ele *ptr, char **av, int ac);
 void					destroy_mutex(t_ele *ptr);
 void					detache_all(t_ele *ptr);
 void					ft_putstr(char *str);
-void					ft_sleep(long time);
+void					ft_sleep(unsigned long time);
 
 #endif

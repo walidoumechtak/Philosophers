@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/18 15:33:24 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/19 16:32:45 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_dead(t_ele *ptr, int i)
 {
-	long	diff_time;
+	unsigned long	diff_time;
 
 	pthread_mutex_lock(&ptr->mut_stop);
 	diff_time = get_current_time() - ptr->philo[i].time_last_meal;
@@ -42,9 +42,9 @@ void	dead(t_ele *ptr)
 		{
 			if (is_dead(ptr, i) == 1)
 				break ;
-			if (ptr->philo[j].nb_time_must_eat == 0 && ptr->ac == 6)
+			if (ptr->ac == 6 && ptr->philo[j].nb_time_must_eat == 0)
 				j++;
-			if (j == ptr->nb_philo - 1 && ptr->ac == 6)
+			if (ptr->ac == 6 && j == ptr->nb_philo - 1)
 			{
 				ptr->is_all_philo_eat = 1;
 				break ;
@@ -62,7 +62,8 @@ void	*routine(void *arg)
 
 	philo = (t_philos *)arg;
 	if (philo->id_philo % 2 == 0)
-		usleep(100);
+		ft_sleep(ms_to_micro(100));
+		// usleep(100);
 	while (philo->nb_time_must_eat)
 	{
 		pthread_mutex_lock(&philo->element->mut[philo->id_left_philo]);
@@ -78,8 +79,8 @@ void	*routine(void *arg)
 		pthread_mutex_unlock(&philo->element->mut[philo->id_left_philo]);
 		pthread_mutex_unlock(&philo->element->mut[philo->id_right_philo]);
 		sleeping(philo->element, philo->id_philo);
-		if (philo->nb_time_must_eat == 0)
-			break ;
+		// if (philo->nb_time_must_eat == 0)
+		// 	break ;
 		thinking(philo->element, philo->id_philo);
 	}
 	return (NULL);

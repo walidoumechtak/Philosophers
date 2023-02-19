@@ -6,17 +6,17 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 10:35:23 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/16 09:06:47 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/19 15:13:53 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
-long	get_current_time(void)
+unsigned long	get_current_time(void)
 {
 	int				time;
 	struct timeval	tv;
-	long			fulltime;
+	unsigned long			fulltime;
 
 	time = gettimeofday(&tv, NULL);
 	if (time == -1)

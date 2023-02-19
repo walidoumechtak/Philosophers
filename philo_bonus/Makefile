@@ -6,7 +6,7 @@
 #    By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 11:00:35 by woumecht          #+#    #+#              #
-#    Updated: 2023/02/16 18:48:41 by woumecht         ###   ########.fr        #
+#    Updated: 2023/02/18 16:33:19 by woumecht         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ SRC =	main_bonus.c \
 		ft_atoi.c \
 		get_current_time.c \
 		cases_of_philo.c \
+		init.c \
 		# destroy.c \
-# init.c \
 
 
 OBJ = $(SRC:.c=.o)

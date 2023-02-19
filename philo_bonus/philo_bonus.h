@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 15:30:35 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/17 07:59:38 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/19 08:54:37 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@
 typedef struct s_philos
 {
 	int					id_philo;
-	// int					id_right_philo;
-	// int					id_left_philo;
-	size_t				time_last_meal;
+	long				time_last_meal;
 	int					nb_time_must_eat;
 	struct s_element	*element;
 
@@ -35,12 +33,12 @@ typedef struct s_philos
 
 typedef struct s_element
 {
+	pthread_t			th;
 	int					ac;
 	sem_t				*sem_fork;
 	sem_t				*sem_string;
-	t_philos			*philo;
+	t_philos			philo;
 	int					nb_philo;
-	int					id_philo;
 	long				time_to_eat;
 	long				time_to_sleep;
 	long				time_to_die_us;
@@ -63,5 +61,6 @@ long					get_current_time(void);
 long					ms_to_micro(int ms);
 long					micro_to_ms(size_t micro);
 int						errors(char **av);
+void					init_struct(t_ele *ptr, char **av, int ac);
 
 #endif
