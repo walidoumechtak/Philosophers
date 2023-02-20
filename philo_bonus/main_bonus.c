@@ -6,36 +6,54 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 15:25:39 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/19 11:14:50 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:12:53 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-// void dead(t_ele *ptr)
-// {
-//      int  i;
-//      while (1)
-//      {
-//           i = 0;
-//           while (i < ptr->nb_philo)
-//           {
-//                if (ptr->pids[i] == 0)
-//                     if (get_current_time() - ptr->philo.time_last_meal > ptr->time_to_die)
-//                          exit(1);
-//                i++;
-//           }
-//      }
-// }
-
-void *routine(void *arg)
+// void kill_all_process(t_ele *ptr, int skip)
+void kill_all_process(t_ele *ptr)
 {
-     t_ele *ptr;
+     int  i;
+
+     i = 0;
+     while (i < ptr->nb_philo)
+     {
+          kill(ptr->pids[i], SIGTERM);
+          i++;
+     }
+}
+
+void *dead(void *arg)
+{
+     t_ele     *ptr;
 
      ptr = (t_ele *) arg;
+     int  i;
+     while (1)
+     {
+          i = 0;
+          while (i < ptr->nb_philo)
+          {
+               if (ptr->pids[i] == 0)
+                    if (get_current_time() - ptr->philo.time_last_meal > ptr->time_to_die)
+                    {
+                         ptr->stop = 0;
+                         died(ptr, ptr->philo.id_philo);
+                         exit(0);
+                    }
+               i++;
+          }
+     }
+     return (NULL);
+}
+
+void routine(t_ele *ptr)
+{
      if (ptr->philo.id_philo % 2 == 0)
           usleep(200);
-     while (ptr->stop == 1)
+     while (1)
      {
           sem_wait(ptr->sem_fork);
           taken_fork(ptr, ptr->philo.id_philo);
@@ -44,38 +62,19 @@ void *routine(void *arg)
           eating(ptr, ptr->philo.id_philo);
           sem_post(ptr->sem_fork);
           sem_post(ptr->sem_fork);
-          if (get_current_time() - ptr->philo.time_last_meal > ptr->time_to_die)
-          {
-               died(ptr, ptr->philo.id_philo);
-               ptr->stop = 0;
-               return (NULL);
-          }
+          if (ptr->stop == 0)
+               break ;
           sleeping(ptr, ptr->philo.id_philo);
           thinking(ptr, ptr->philo.id_philo);
      }
-     return (NULL);
 }
 
-void kill_all_process(t_ele *ptr, int skip)
-{
-     int  i;
 
-     i = 0;
-     while (i < ptr->nb_philo)
-     {
-          if (i == skip)
-          {
-               i++;
-               continue ;
-          }
-          kill(ptr->pids[i], SIGTERM);
-          i++;
-     }
-}
 
 void philosophers(t_ele *ptr)
 {
      int  i;
+     int status;
      
      i = 0;
      ptr->pids[0] = fork();
@@ -84,17 +83,22 @@ void philosophers(t_ele *ptr)
           if (ptr->pids[i] == 0)
           {
                ptr->philo.id_philo = i+1;
-               pthread_create(&ptr->th, NULL, &routine, ptr);
+               pthread_create(&ptr->th, NULL, &dead, ptr);
+               routine(ptr);
                pthread_join(ptr->th, NULL);
-               if (ptr->stop == 0)
-                    exit (1);
           }
           else
                ptr->pids[++i] = fork();
      }
-     while ()
+     // while ((waitpid(-1, &status, 0)))
+     while (wait(&status))
      {
-          
+          if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
+          {
+               // printf("how is this possible at the first time ============================ \n");
+               kill_all_process(ptr);
+               return ;
+          }
      }
 }
 

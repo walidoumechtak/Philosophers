@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 15:30:35 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/19 08:54:37 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:46:45 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ long					ms_to_micro(int ms);
 long					micro_to_ms(size_t micro);
 int						errors(char **av);
 void					init_struct(t_ele *ptr, char **av, int ac);
+void    ft_sleep(unsigned long sleep_time);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:00:36 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/19 09:34:50 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:47:38 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	sleeping(t_ele *ptr, int x)
 	printf("%zums\t| %d | is sleeping\n", get_current_time() - ptr->design_time,
 		x);
 	sem_post(ptr->sem_string);
-	usleep(ptr->time_to_sleep_us);
+	ft_sleep(ptr->time_to_sleep_us);
+	// usleep(ptr->time_to_sleep_us);
 }
 
 void	eating(t_ele *ptr, int x)
@@ -43,7 +44,8 @@ void	eating(t_ele *ptr, int x)
 		x);
 	sem_post(ptr->sem_string);
 	ptr->philo.time_last_meal = get_current_time();
-	usleep(ptr->time_to_eat_us);
+	ft_sleep(ptr->time_to_eat_us);
+	// usleep(ptr->time_to_eat_us);
 	if (ptr->ac == 6)
 		ptr->philo.nb_time_must_eat--;
 }

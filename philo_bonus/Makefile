@@ -6,7 +6,7 @@
 #    By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 11:00:35 by woumecht          #+#    #+#              #
-#    Updated: 2023/02/18 16:33:19 by woumecht         ###   ########.fr        #
+#    Updated: 2023/02/20 15:47:01 by woumecht         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC =	main_bonus.c \
 		get_current_time.c \
 		cases_of_philo.c \
 		init.c \
+		ft_sleep.c \
 		# destroy.c \
 
 
