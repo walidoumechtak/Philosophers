@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:27:39 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/16 20:06:58 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:46:46 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	init_struct(t_ele *ptr, char **av, int ac)
 	ptr->stop = 1;
 	ptr->design_time = get_current_time();
 	ptr->is_one_philo = 0;
-	ptr->is_all_philo_eat = 0;
+	ptr->is_all_philo_eat = ptr->nb_philo;
 	fill_the_philosophers(ptr, av, ac);
 }
 

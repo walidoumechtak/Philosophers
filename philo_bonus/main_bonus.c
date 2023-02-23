@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 15:25:39 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/20 16:12:53 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/23 09:19:38 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void routine(t_ele *ptr)
 {
      if (ptr->philo.id_philo % 2 == 0)
           usleep(200);
-     while (1)
+     while (ptr->stop == 1)
      {
           sem_wait(ptr->sem_fork);
           taken_fork(ptr, ptr->philo.id_philo);
@@ -62,8 +62,8 @@ void routine(t_ele *ptr)
           eating(ptr, ptr->philo.id_philo);
           sem_post(ptr->sem_fork);
           sem_post(ptr->sem_fork);
-          if (ptr->stop == 0)
-               break ;
+          // if (ptr->stop == 0)
+          //      break ;
           sleeping(ptr, ptr->philo.id_philo);
           thinking(ptr, ptr->philo.id_philo);
      }
@@ -117,8 +117,8 @@ int main(int ac, char **av)
           philosophers(ptr);
           sem_close(ptr->sem_fork);
           sem_close(ptr->sem_string);
-          free(ptr);
           sem_unlink("sem_f");
           sem_unlink("sem_s");
+          free(ptr);
      } 
 }

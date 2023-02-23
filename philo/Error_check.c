@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 13:05:02 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/18 08:48:06 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:39:41 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	check_argument_format(char **av)
 				return (110);
 			else if (av[i][0] == '+')
 				j++;
-			else if (av[i][0] == '-')
+			else if (av[i][0] == '-' || (i < 4 && av[i + 1] != NULL
+						&& ft_atoi(av[i + 1]) < 60))
 				return (120);
 			if (av[i][j] < '0' || av[i][j] > '9')
 				return (100);

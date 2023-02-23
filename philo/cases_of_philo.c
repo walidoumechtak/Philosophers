@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:00:36 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/19 15:44:05 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:46:34 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ void	eating(t_ele *ptr, int x)
 	// usleep(ptr->time_to_eat_us);
 	ft_sleep(ptr->time_to_eat_us);
 	if (ptr->ac == 6)
+	{
 		ptr->philo[x - 1].nb_time_must_eat--;
+		if (ptr->philo[x - 1].nb_time_must_eat == 0)
+			ptr->is_all_philo_eat--;
+	}
 }
 
 
