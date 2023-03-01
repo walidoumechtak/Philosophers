@@ -1,0 +1,46 @@
+2ms     | 1 | has taken a fork
+2ms     | 1 | has taken a fork
+2ms     | 1 | is eating
+3ms     | 2 | has taken a fork
+3ms     | 2 | has taken a fork
+3ms     | 2 | is eating
+5ms     | 3 | has taken a fork
+202ms   | 1 | is sleeping
+202ms   | 3 | has taken a fork
+202ms   | 4 | has taken a fork
+202ms   | 3 | is eating
+203ms   | 2 | is sleeping
+203ms   | 5 | has taken a fork
+203ms   | 4 | has taken a fork
+203ms   | 4 | is eating
+402ms   | 1 | is thinking
+402ms   | 3 | is sleeping
+402ms   | 5 | has taken a fork
+402ms   | 1 | has taken a fork
+402ms   | 5 | is eating
+403ms   | 2 | is thinking
+403ms   | 4 | is sleeping
+403ms   | 1 | has taken a fork
+403ms   | 2 | has taken a fork
+403ms   | 1 | is eating
+602ms   | 3 | is thinking
+602ms   | 5 | is sleeping
+602ms   | 2 | has taken a fork
+602ms   | 3 | has taken a fork
+602ms   | 2 | is eating
+603ms   | 4 | is thinking
+603ms   | 3 | has taken a fork
+603ms   | 3 | is eating
+603ms   | 4 | has taken a fork
+Error_check.c
+Makefile
+cases_of_philo.c
+convert_time.c
+ft_atoi.c
+ft_sleep.c
+get_current_time.c
+init.c
+main_bonus.c
+philo_bonus
+philo_bonus.h
+walid
