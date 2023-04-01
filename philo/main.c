@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:22:47 by woumecht          #+#    #+#             */
-/*   Updated: 2023/03/01 07:51:18 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:32:49 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	dead(t_ele *ptr)
 	}
 }
 
-
 void	*routine(void *arg)
 {
 	t_philos	*philo;
@@ -57,7 +56,6 @@ void	*routine(void *arg)
 	philo = (t_philos *)arg;
 	if (philo->id_philo % 2 == 0)
 		ft_sleep(ms_to_micro(100));
-		// usleep(100);
 	while (philo->nb_time_must_eat)
 	{
 		pthread_mutex_lock(&philo->element->mut[philo->id_left_philo]);
@@ -128,5 +126,5 @@ int	main(int ac, char **av)
 		}
 	}
 	else
-		printf("Number of arguments are incorrect !\n");
+		return (ft_putstr("Number of arguments are incorrect !\n"), 4);
 }

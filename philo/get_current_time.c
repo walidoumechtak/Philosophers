@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 10:35:23 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/19 15:13:53 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:32:55 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ unsigned long	get_current_time(void)
 {
 	int				time;
 	struct timeval	tv;
-	unsigned long			fulltime;
+	unsigned long	fulltime;
 
 	time = gettimeofday(&tv, NULL);
 	if (time == -1)

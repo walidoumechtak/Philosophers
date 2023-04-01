@@ -6,25 +6,25 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 08:44:36 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/18 08:47:31 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:33:06 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
-void    ft_putchar(char c)
+void	ft_putchar(char c)
 {
-    write(2, &c, 1);
+	write(2, &c, 1);
 }
 
-void    ft_putstr(char *str)
+void	ft_putstr(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        ft_putchar(str[i]);
-        i++;
-    }
+	i = 0;
+	while (str[i])
+	{
+		ft_putchar(str[i]);
+		i++;
+	}
 }

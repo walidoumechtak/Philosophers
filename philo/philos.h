@@ -6,7 +6,7 @@
 /*   By: woumecht <woumecht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:23:15 by woumecht          #+#    #+#             */
-/*   Updated: 2023/02/24 09:57:17 by woumecht         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:05:58 by woumecht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define PHILOS_H
 
 # include <pthread.h>
-#include <string.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
 
@@ -42,15 +42,15 @@ typedef struct s_element
 	t_philos			*philo;
 	int					nb_philo;
 	int					*id_philo;
-	unsigned long				time_to_eat;
-	unsigned long				time_to_sleep;
-	unsigned long				time_to_die_us;
-	unsigned long				time_to_sleep_us;
-	unsigned long				time_to_die;
-	unsigned long				time_to_eat_us;
+	unsigned long		time_to_eat;
+	unsigned long		time_to_sleep;
+	unsigned long		time_to_die_us;
+	unsigned long		time_to_sleep_us;
+	unsigned long		time_to_die;
+	unsigned long		time_to_eat_us;
 	int					is_all_philo_eat;
 	int					stop;
-	unsigned long				design_time;
+	unsigned long		design_time;
 	int					is_one_philo;
 }						t_ele;
 
@@ -60,9 +60,9 @@ void					died(t_ele *ptr, int x);
 void					sleeping(t_ele *ptr, int x);
 void					eating(t_ele *ptr, int x);
 void					taken_fork(t_ele *ptr, int x);
-unsigned long					get_current_time(void);
-unsigned long					ms_to_micro(int ms);
-unsigned long					micro_to_ms(unsigned long micro);
+unsigned long			get_current_time(void);
+unsigned long			ms_to_micro(int ms);
+unsigned long			micro_to_ms(unsigned long micro);
 int						errors(char **av);
 void					init_struct(t_ele *ptr, char **av, int ac);
 void					init_mutex(t_ele *ptr);
